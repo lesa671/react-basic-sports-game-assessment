@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-/* body {
-    background-color: rgb(245, 191, 126);
-} */
-
 .Team {
     display: flex;
     flex-direction: column;
@@ -58,4 +54,11 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #fc0;
     text-shadow: 2px 2px 0 black;
+}
+
+.resetButton {
+    background-color: green;
+    color: white;
+    font-size: 20px;
+    padding: 10px 40px;
 }
