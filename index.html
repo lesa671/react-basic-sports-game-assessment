@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Basic Sports Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id='root'></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type='text/babel'>
+
+        class Team extends React.Component {
+            constructor(props) {
+                super(props)
+
+                this.state = {
+                    shots: 0,
+                    score: 0,
+                }
+
+                this.shotSound = new Audio('./assets/audio/zapsplat_magic_wand_whoosh_burst_005_12550.mp3')
+                this.scoreSound = new Audio('./assets/audio/PrincessBrideSword.wav')
+            }
+
+
+
+            shotHandler = () => {
+                let score = this.state.score
+                this.shotSound.play()
+
+                if (Math.random() > 0.5) {
+                    score += 1
+
+                    setTimeout(() => {
+                        this.scoreSound.play()
+                    }, 200)
+                }
+
+                this.setState((state, props) => ({
+                    shots: state.shots + 1,
+                    score: score,
+                }))
+            }
+
+
+            render() {
+                let shotPercentageDiv
+
+                if (this.state.shots) {
+                    const shotPercentage = Math.round((this.state.score / this.state.shots) * 100)
+                    shotPercentageDiv = (
+                        <div>
+                            <p>Shooting %:   {shotPercentage}</p>
+                        </div>
+                    )
+                }
+
+                return (
+                    <div className='Team'>
+                        <h2>{this.props.teamName}</h2>
+
+                        <div className='logo'>
+                            <img src={this.props.teamLogo} alt='logo for {this.props.teamName}' />
+                        </div>
+                        <br />
+                        <div>
+                            <p>Shots:   {this.state.shots}</p>
+                        </div>
+
+                        <div>
+                            <p>Score:   {this.state.score}</p>
+                        </div>
+
+                        {shotPercentageDiv}
+
+                        <button className='shootButton' onClick={this.shotHandler}>Shoot!</button>
+                    </div>
+
+                )
+            }
+
+        }
+
+        function Game(props) {
+            return (
+                <div className='Game'>
+                    <h1>Welome to {props.venue}</h1>
+                    <div className='stats'>
+                        <Team teamName={props.visitingTeam.name}
+                            teamLogo={props.visitingTeam.logoSrc}
+                        />
+
+                        <div className='versus'>
+                            <h1>VS</h1>
+                        </div>
+
+                        <Team teamName={props.homeTeam.name}
+                            teamLogo={props.homeTeam.logoSrc}
+                        />
+                    </div>
+                </div>
+            )
+
+
+        }
+
+        function App(props) {
+            const leprechauns = {
+                name: 'Dublin Leprechauns',
+                logoSrc: './assets/images/LeprechaunPlayingBasketball400px.png',
+            }
+
+            const unicorns = {
+                name: 'Indus Valley Unicorns',
+                logoSrc: './assets/images/LeprechaunPlayingBasketball400px.png',
+
+            }
+
+            const dragons = {
+                name: 'Valyria Dragons',
+                logoSrc: './assets/images/dragon_playing_basketball.png',
+
+            }
+
+            const reapers = {
+                name: 'Hanau Grim Reapers',
+                logoSrc: './assets/images/grim_reaper_playing_basketball.png',
+
+            }
+
+            return (
+                <div className='App'>
+                    <Game
+                        venue='The Crystal Ballroom'
+                        homeTeam={unicorns}
+                        visitingTeam={leprechauns}
+                    />
+                    <Game
+                        venue='Endtimes Arena'
+                        homeTeam={reapers}
+                        visitingTeam={dragons}
+                    />
+                </div>
+            )
+
+        }
+
+
+
+        ReactDOM.render(<App />, document.getElementById('root'))
+
+
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
