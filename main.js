@@ -1,4 +1,5 @@
-//Audio and Image Credits
+// Coding assist from Davey Strus video solutions
+// ---Audio and Image Credits---
 // Sounds from: Zapsplat.com
 // images from:
 // grim reaper --> https://www.deviantart.com/nyourochi/art/Grim-Reaper-request-722635346
